@@ -30,7 +30,7 @@ export OPENAI_API_KEY=lm-studio
 
 Launch browser:
 
-http://localhost:8080
+http://localhost:5173
 
 ## Frontend
 
