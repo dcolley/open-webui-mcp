@@ -76,6 +76,7 @@ from open_webui.routers import (
     tools,
     users,
     utils,
+    mcp,
 )
 
 from open_webui.routers.retrieval import (
@@ -901,6 +902,7 @@ app.include_router(
 )
 app.include_router(utils.router, prefix="/api/v1/utils", tags=["utils"])
 
+app.include_router(mcp.router, prefix="/api/v1/mcp", tags=["mcp"])
 
 try:
     audit_level = AuditLevel(AUDIT_LOG_LEVEL)

@@ -57,6 +57,7 @@ export const prompts: Writable<null | Prompt[]> = writable(null);
 export const knowledge: Writable<null | Document[]> = writable(null);
 export const tools = writable(null);
 export const functions = writable(null);
+export const mcpServers = writable(null);
 
 export const banners: Writable<Banner[]> = writable([]);
 

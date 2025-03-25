@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Request
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
-from typing import Optional
+from typing import Optional, List, Dict
 
 from open_webui.utils.auth import get_admin_user, get_verified_user
 from open_webui.config import get_config, save_config
@@ -64,6 +64,45 @@ async def set_direct_connections_config(
     return {
         "ENABLE_DIRECT_CONNECTIONS": request.app.state.config.ENABLE_DIRECT_CONNECTIONS,
     }
+
+
+############################
+# MCPServersConfig
+############################
+
+
+class MCPServerConfig(BaseModel):
+    name: str
+    command: Optional[str] = None
+    url: Optional[str] = None
+    extraVars: Dict[str, str] = {}
+    model_config = ConfigDict(from_attributes=True)
+
+
+# class MCPServersConfigForm(BaseModel):
+#     servers: List[MCPServerConfig]
+#     model_config = ConfigDict(from_attributes=True)
+
+
+# @router.get("/mcpservers", response_model=MCPServersConfigForm)
+# async def get_mcp_servers_config(request: Request, user=Depends(get_admin_user)):
+#     print(request.app.state.config.MCP_SERVERS)
+#     return {
+#         "servers": request.app.state.config.MCP_SERVERS
+#     }
+
+
+# @router.post("/mcpservers", response_model=MCPServersConfigForm)
+# async def set_mcp_servers_config(
+#     request: Request,
+#     form_data: MCPServersConfigForm,
+#     user=Depends(get_admin_user)
+#   ): 
+#   request.app.state.config.MCP_SERVERS = form_data.servers
+#   print(request.app.state.config.MCP_SERVERS)
+#   return {
+#     "servers": request.app.state.config.MCP_SERVERS
+#   }
 
 
 ############################

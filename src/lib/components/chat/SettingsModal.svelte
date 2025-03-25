@@ -18,6 +18,7 @@
 	import SearchInput from '../layout/Sidebar/SearchInput.svelte';
 	import Search from '../icons/Search.svelte';
 	import Connections from './Settings/Connections.svelte';
+	import MCPServers from './Settings/MCPServers.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -127,6 +128,15 @@
 			id: 'connections',
 			title: 'Connections',
 			keywords: []
+		},
+		{
+			id: 'mcpservers',
+			title: 'MCPServers',
+			keywords: [
+				'mcpservers',
+				'mcp',
+				'mcpconfig',
+			]
 		},
 		{
 			id: 'personalization',
@@ -482,6 +492,34 @@
 									<div class=" self-center">{$i18n.t('Connections')}</div>
 								</button>
 							{/if}
+						{:else if tabId === 'mcpservers'}
+							{#if $user.role === 'admin'}
+								<button
+									class="px-0.5 py-1 min-w-fit rounded-lg flex-1 md:flex-none flex text-right transition {selectedTab ===
+									'mcpservers'
+										? ''
+										: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
+									on:click={() => {
+										selectedTab = 'mcpservers';
+									}}
+								>
+									<div class=" self-center mr-2">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 16 16"
+											fill="currentColor"
+											class="w-4 h-4"
+										>
+											<path
+												d="M1 9.5A3.5 3.5 0 0 0 4.5 13H12a3 3 0 0 0 .917-5.857 2.503 2.503 0 0 0-3.198-3.019 3.5 3.5 0 0 0-6.628 2.171A3.5 3.5 0 0 0 1 9.5Z"
+											/>
+                      <!-- lightning bolt -->
+                      <path d="M7 10H5l2-4H6l1-3h2L8 6h2l-3 4z" fill="white"/>
+										</svg>
+									</div>
+									<div class=" self-center">{$i18n.t('MCP Servers')}</div>
+								</button>
+							{/if}
 						{:else if tabId === 'personalization'}
 							<button
 								class="px-0.5 py-1 min-w-fit rounded-lg flex-1 md:flex-none flex text-left transition {selectedTab ===
@@ -657,6 +695,13 @@
 					/>
 				{:else if selectedTab === 'connections'}
 					<Connections
+						saveSettings={async (updated) => {
+							await saveSettings(updated);
+							toast.success($i18n.t('Settings saved successfully!'));
+						}}
+					/>
+				{:else if selectedTab === 'mcpservers'}
+					<MCPServers
 						saveSettings={async (updated) => {
 							await saveSettings(updated);
 							toast.success($i18n.t('Settings saved successfully!'));

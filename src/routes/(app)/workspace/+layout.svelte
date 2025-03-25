@@ -9,7 +9,8 @@
 		models,
 		prompts,
 		knowledge,
-		tools
+		tools,
+		mcpServers
 	} from '$lib/stores';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
@@ -34,7 +35,13 @@
 				!$user?.permissions?.workspace?.prompts
 			) {
 				goto('/');
-			} else if ($page.url.pathname.includes('/tools') && !$user?.permissions?.workspace?.tools) {
+			} else if ($page.url.pathname.includes('/tools') &&
+        !$user?.permissions?.workspace?.tools) {
+				goto('/');
+			} else if (
+				$page.url.pathname.includes('/mcp_servers') &&
+				!$user?.permissions?.workspace?.mcp_servers
+			) {
 				goto('/');
 			}
 		}
@@ -119,6 +126,17 @@
 								href="/workspace/tools"
 							>
 								{$i18n.t('Tools')}
+							</a>
+						{/if}
+
+						{#if $user?.role === 'admin' || $user?.permissions?.workspace?.mcp_servers}
+							<a
+								class="min-w-fit rounded-full p-1.5 {$page.url.pathname.includes('/workspace/mcp')
+									? ''
+									: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition"
+								href="/workspace/mcp"
+							>
+								{$i18n.t('MCP')}
 							</a>
 						{/if}
 					</div>

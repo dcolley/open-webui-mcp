@@ -46,6 +46,7 @@
 	import Photo from '../icons/Photo.svelte';
 	import CommandLine from '../icons/CommandLine.svelte';
 	import { KokoroWorker } from '$lib/workers/KokoroWorker';
+	import { stringify } from 'postcss';
 
 	const i18n = getContext('i18n');
 
@@ -1101,7 +1102,7 @@
 
 								<div class=" flex justify-between mt-1.5 mb-2.5 mx-0.5 max-w-full">
 									<div class="ml-1 self-end gap-0.5 flex items-center flex-1 max-w-[80%]">
-										<InputMenu
+                    <InputMenu
 											bind:selectedToolIds
 											{screenCaptureHandler}
 											{inputFilesHandler}

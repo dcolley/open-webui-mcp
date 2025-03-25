@@ -13,6 +13,8 @@ import requests
 from pydantic import BaseModel
 from sqlalchemy import JSON, Column, DateTime, Integer, func
 
+import json
+
 from open_webui.env import (
     DATA_DIR,
     DATABASE_URL,
@@ -260,7 +262,9 @@ class AppConfig:
             self._state[key].save()
 
     def __getattr__(self, key):
-        return self._state[key].value
+        if key in self._state:
+            return self._state[key].value
+        raise KeyError(key)
 
 
 ####################################
@@ -2462,4 +2466,14 @@ LDAP_CA_CERT_FILE = PersistentConfig(
 
 LDAP_CIPHERS = PersistentConfig(
     "LDAP_CIPHERS", "ldap.server.ciphers", os.environ.get("LDAP_CIPHERS", "ALL")
+)
+
+####################################
+# MCP Server Configuration
+####################################
+
+MCP_SERVERS = PersistentConfig(
+    "MCP_SERVERS",
+    "mcp.servers",
+    os.environ.get("MCP_SERVERS", "[]"),
 )

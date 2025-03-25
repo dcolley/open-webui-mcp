@@ -13,6 +13,8 @@
 				goto('/workspace/prompts');
 			} else if ($user?.permissions?.workspace?.tools) {
 				goto('/workspace/tools');
+			} else if ($user?.permissions?.workspace?.mcp_servers) {
+				goto('/workspace/mcp_servers');
 			} else {
 				goto('/');
 			}
